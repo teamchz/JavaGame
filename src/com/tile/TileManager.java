@@ -4,11 +4,7 @@ import com.company.GamePanel;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class TileManager {
     GamePanel gp;
@@ -21,6 +17,7 @@ public class TileManager {
         tile = new Tile[10];
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
+        tileGenerator();
         loadMap("/maps/map2.txt");
     }
 
@@ -81,10 +78,32 @@ public class TileManager {
             int screenX = worldX - gp.player.worldX + gp.player.screenX;
             int screenY = worldY - gp.player.worldY + gp.player.screenY;
 
+            // Stop moving the camera at the edge
+            if (gp.player.screenX > gp.player.worldX) {
+                screenX = worldX;
+            }
+            if (gp.player.screenY > gp.player.worldY) {
+                screenY = worldY;
+            }
+            int rightOffset = gp.screenWidth - gp.player.screenX;
+            if (rightOffset > gp.worldWidth - gp.player.worldX) {
+                screenX = gp.screenWidth - (gp.worldWidth - worldX);
+            }
+            int bottomOffset = gp.screenHeight - gp.player.screenY;
+            if (bottomOffset > gp.worldHeight - gp.player.worldY) {
+                screenY = gp.screenHeight - (gp.worldHeight - worldY);
+            }
+
             if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
             worldX - gp.tileSize < gp.player.worldX + gp.player.screenX &&
             worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
             worldY - gp.tileSize < gp.player.worldY + gp.player.screenY) {
+                g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+            }
+            else if (gp.player.screenX > gp.player.worldX ||
+                    gp.player.screenY > gp.player.worldY ||
+                    rightOffset > gp.worldWidth - gp.player.worldX ||
+                    bottomOffset > gp.worldHeight - gp.player.worldY) {
                 g2.drawImage(tile[tileNum].image, screenX, screenY, gp.tileSize, gp.tileSize, null);
             }
 
@@ -95,6 +114,17 @@ public class TileManager {
                 worldRow++;
             }
         }
+    }
+    public void tileGenerator() {
+        try {
+            File map = new File("C:/Users/RYZEN/IdeaProjects/JavaGame/res/maps/map3.txt");
+            map.createNewFile();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }
