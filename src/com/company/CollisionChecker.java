@@ -29,7 +29,9 @@ public class CollisionChecker {
                 tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityTopRow];
                 if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
                     entity.collisionOn = true;
-                    gp.ui.showMessage("You Loose");
+                    System.out.println(gp.player.worldX);
+                    System.out.println(gp.player.worldY);
+                    gp.ui.showMessage("You Lose");
                     gp.gameThread = null;
                 }
                 break;
@@ -39,7 +41,7 @@ public class CollisionChecker {
                 tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
                 if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
                     entity.collisionOn = true;
-                    gp.ui.showMessage("You Loose");
+                    gp.ui.showMessage("You Lose");
                     gp.gameThread = null;
                 }
                 break;
@@ -49,7 +51,7 @@ public class CollisionChecker {
                 tileNum2 = gp.tileM.mapTileNum[entityLeftCol][entityBottomRow];
                 if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
                     entity.collisionOn = true;
-                    gp.ui.showMessage("You Loose");
+                    gp.ui.showMessage("You Lose");
                     gp.gameThread = null;
                 }
                 break;
@@ -59,7 +61,7 @@ public class CollisionChecker {
                 tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
                 if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
                     entity.collisionOn = true;
-                    gp.ui.showMessage("You Loose");
+                    gp.ui.showMessage("You Lose");
                     gp.gameThread = null;
                 }
                 break;

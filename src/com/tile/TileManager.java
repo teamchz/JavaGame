@@ -5,6 +5,7 @@ import com.company.GamePanel;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.*;
+import java.util.Random;
 
 public class TileManager {
     GamePanel gp;
@@ -18,7 +19,7 @@ public class TileManager {
         mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
         getTileImage();
         tileGenerator();
-        loadMap("/maps/map2.txt");
+        loadMap("/maps/map3.txt");
     }
 
     public void getTileImage() {
@@ -69,7 +70,6 @@ public class TileManager {
         int worldCol = 0;
         int worldRow = 0;
 
-
         while (worldCol < gp.maxWorldCol && worldRow < gp.maxWorldRow) {
             int tileNum = mapTileNum[worldCol][worldRow];
 
@@ -117,14 +117,31 @@ public class TileManager {
     }
     public void tileGenerator() {
         try {
-            File map = new File("C:/Users/RYZEN/IdeaProjects/JavaGame/res/maps/map3.txt");
-            map.createNewFile();
+            FileWriter myWriter = new FileWriter("res/maps/map3.txt");
+            Random random = new Random();
+            int upperBound = 11;
+            int col = 100;
+            int row = 80;
+
+            for (int i=0; i<row*2; i++) {
+                for (int j=0; j<col; j++) {
+                    int rand1 = random.nextInt(upperBound);
+                    int rand2 = random.nextInt(upperBound);
+                    if (rand1 < 3 && rand2 < 1) {
+                        myWriter.write("1 ");
+                    }
+                    else myWriter.write("0 ");
+                }
+                myWriter.write(System.getProperty( "line.separator" ));
+            }
         }
         catch (IOException e) {
             e.printStackTrace();
         }
 
-
+    }
+    public void removeTile(Graphics2D g2) {
+        g2.drawImage(tile[0].image, 0, 0, gp.tileSize, gp.tileSize, null);
     }
 
 }
