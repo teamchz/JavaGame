@@ -14,14 +14,14 @@ public class Controller {
         this.gp = gp;
     }
 
-    public void tick() {
+    public void update() {
         for (int i = 0; i < b.size(); i++) {
             TempBullet = b.get(i);
             if (TempBullet.getY() < 0 || TempBullet.getY() > 3840
             || TempBullet.getX() < 0 || TempBullet.getX() > 4800) {
                 removeBullet(TempBullet);
             }
-            TempBullet.tick();
+            TempBullet.update();
         }
     }
 

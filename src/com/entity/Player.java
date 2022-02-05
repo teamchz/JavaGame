@@ -17,6 +17,7 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
+    public int point = 0;
 
 
     public Player(GamePanel gp, KeyHandler keyHandler) {
@@ -108,9 +109,8 @@ public class Player extends Entity{
             gp.cChecker.checkTile(this);
 
             // CHECK OBJECT COLLISION
-            int objIndex = gp.cChecker.checkObject(this, true);
-            pickUpObject(objIndex);
-
+            int objIndexBomb = gp.cChecker.checkObject(this, true);
+            pickUpObject(objIndexBomb);
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (collisionOn == false) {
@@ -155,6 +155,12 @@ public class Player extends Entity{
 
     public void pickUpObject(int i) {
         if (i != 99999) {
+            gp.obj[i] = null;
+        }
+    }
+
+    public void deleteObject(int i) {
+        if (i != 9999999) {
             gp.obj[i] = null;
         }
     }

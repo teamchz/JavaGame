@@ -5,7 +5,6 @@ import com.object.Bullet;
 import com.object.Controller;
 import com.object.SuperObject;
 import com.tile.TileManager;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -80,6 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
      }
      public void update() {
         player.update();
+        controller.update();
      }
 
      public void paintComponent(Graphics g) {
@@ -93,7 +93,6 @@ public class GamePanel extends JPanel implements Runnable {
          }
 
         player.draw(g2);
-         controller.tick();
          controller.draw(g2);
         ui.draw(g2);
 

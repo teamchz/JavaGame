@@ -23,6 +23,7 @@ public class UI {
 
     public void draw(Graphics2D g2) {
         g2.setFont(arial_40);
+        g2.drawString("Points = " + gp.player.point, 70, 70);
         if (messageOn == true) {
             g2.drawString(message, 510, 400);
 

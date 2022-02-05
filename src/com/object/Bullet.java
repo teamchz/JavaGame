@@ -10,9 +10,12 @@ import java.util.Objects;
 
 public class Bullet extends SuperObject {
     GamePanel gp;
-    private int worldX;
-    private int worldY;
-    private final String direction;
+    public int worldX;
+    public int worldY;
+    public String direction;
+    public Rectangle solidArea;
+    public int solidAreaDefaultX, solidAreaDefaultY;
+    public boolean collisionOn = false;
     BufferedImage image;
 
     public Bullet (int worldX, int worldY, String direction,GamePanel gp) {
@@ -20,6 +23,12 @@ public class Bullet extends SuperObject {
         this.worldY = worldY;
         this.direction = direction;
         this.gp = gp;
+        solidArea = new Rectangle();
+        solidArea.x = gp.player.worldX;
+        solidArea.y = gp.player.worldY;
+        solidArea.width = 32;
+        solidArea.height = 32;
+
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/bullet.png")));
         }
@@ -28,11 +37,35 @@ public class Bullet extends SuperObject {
         }
     }
 
-    public void tick() {
-        if (Objects.equals(direction, "up")) worldY -= 20;
-        else if (Objects.equals(direction, "down")) worldY += 20;
-        else if (Objects.equals(direction, "left")) worldX -= 20;
-        else if (Objects.equals(direction, "right")) worldX += 20;
+    public void update() {
+        if (Objects.equals(direction, "up")) {
+            worldY -= 20;
+            solidArea.y -= 20;
+        }
+        else if (Objects.equals(direction, "down")) {
+            worldY += 20;
+            solidArea.y += 20;
+        }
+        else if (Objects.equals(direction, "left")) {
+            worldX -= 20;
+            solidArea.x -= 20;
+        }
+        else if (Objects.equals(direction, "right")) {
+            worldX += 20;
+            solidArea.x += 20;
+        }
+        for (int i = 0; i < gp.obj.length; i++) {
+            if (gp.obj[i] != null) {
+                gp.obj[i].solidArea.x = gp.obj[i].worldX;
+                gp.obj[i].solidArea.y = gp.obj[i].worldY;
+                if (solidArea.intersects(gp.obj[i].solidArea)) {
+                    gp.obj[i] = null;
+                    gp.controller.removeBullet(this);
+                    gp.player.point += 100;
+                }
+            }
+        }
+
     }
 
     public int getX() {
