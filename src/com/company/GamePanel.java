@@ -1,6 +1,8 @@
 package com.company;
 
 import com.entity.Player;
+import com.object.Bullet;
+import com.object.Controller;
 import com.object.SuperObject;
 import com.tile.TileManager;
 
@@ -23,8 +25,8 @@ public class GamePanel extends JPanel implements Runnable {
     public final int maxWorldCol = 100;
     public final int maxWorldRow = 80;
 
-    public final int worldWidth = tileSize * maxWorldCol;  // 1600 pixel
-    public final int worldHeight = tileSize * maxWorldRow;  // 1040 pixel
+    public final int worldWidth = tileSize * maxWorldCol;  // 4800 pixel
+    public final int worldHeight = tileSize * maxWorldRow;  // 3840 pixel
 
     int FPS = 60;
 
@@ -35,6 +37,8 @@ public class GamePanel extends JPanel implements Runnable {
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyHandler);
     public SuperObject obj[] = new SuperObject[1000];
+    public Bullet bullet = new Bullet(player.worldX, player.worldY, player.direction,this);
+    public Controller controller = new Controller(this);
     public UI ui = new UI(this);
 
 
@@ -74,7 +78,6 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
      }
-
      public void update() {
         player.update();
      }
@@ -90,6 +93,8 @@ public class GamePanel extends JPanel implements Runnable {
          }
 
         player.draw(g2);
+         controller.tick();
+         controller.draw(g2);
         ui.draw(g2);
 
         g2.dispose();

@@ -30,9 +30,5 @@ public class AssetSetter {
                     }
                 }
             }
-
-        gp.obj[0] = new OBJ_Bomb();
-        gp.obj[0].worldX = 23 * gp.tileSize;
-        gp.obj[0].worldY = 7 * gp.tileSize;
     }
 }

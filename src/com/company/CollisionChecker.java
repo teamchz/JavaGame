@@ -80,7 +80,6 @@ public class CollisionChecker {
                             if (player == true) index = i;
                             gp.ui.showMessage("You Lose");
                             gp.gameThread = null;
-
                         }
                         break;
                     case "down":
@@ -120,5 +119,9 @@ public class CollisionChecker {
         }
 
         return index;
+    }
+
+    public void checkBullet() {
+
     }
 }

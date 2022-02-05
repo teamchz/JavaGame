@@ -2,6 +2,8 @@ package com.entity;
 
 import com.company.GamePanel;
 import com.company.KeyHandler;
+import com.object.Bullet;
+import com.object.Controller;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -15,6 +17,7 @@ public class Player extends Entity{
 
     public final int screenX;
     public final int screenY;
+
 
     public Player(GamePanel gp, KeyHandler keyHandler) {
         this.gp = gp;
@@ -68,21 +71,36 @@ public class Player extends Entity{
         }
     }
 
-
     public void update() {
         if (keyHandler.upPressed || keyHandler.downPressed ||
                 keyHandler.leftPressed || keyHandler.rightPressed) {
             if (keyHandler.upPressed) {
                 direction = "up";
+                if (keyHandler.spacePressed && bulletCounter == 0) {
+                    gp.controller.addBullet(new Bullet(worldX, worldY, direction, gp));
+                    bulletCounter++;
+                }
             }
             else if (keyHandler.downPressed) {
                 direction = "down";
+                if (keyHandler.spacePressed && bulletCounter == 0) {
+                    gp.controller.addBullet(new Bullet(worldX, worldY, direction, gp));
+                    bulletCounter++;
+                }
             }
             else if (keyHandler.leftPressed) {
                 direction = "left";
+                if (keyHandler.spacePressed && bulletCounter == 0) {
+                    gp.controller.addBullet(new Bullet(worldX, worldY, direction, gp));
+                    bulletCounter++;
+                }
             }
-            else if (keyHandler.rightPressed) {
+            else if (keyHandler.rightPressed && bulletCounter == 0) {
                 direction = "right";
+                if (keyHandler.spacePressed) {
+                    gp.controller.addBullet(new Bullet(worldX, worldY, direction, gp));
+                    bulletCounter++;
+                }
             }
 
             //CHECK TILE COLLISION
@@ -92,6 +110,7 @@ public class Player extends Entity{
             // CHECK OBJECT COLLISION
             int objIndex = gp.cChecker.checkObject(this, true);
             pickUpObject(objIndex);
+
 
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if (collisionOn == false) {
@@ -113,20 +132,16 @@ public class Player extends Entity{
 
             spriteCounter++;
             if (spriteCounter > 9) {
-                if (spriteNum == 1) {
-                    spriteNum = 2;
-                }
-                else if (spriteNum == 2) {
-                    spriteNum = 3;
-                }
-                else if (spriteNum == 3) {
-                    spriteNum = 4;
-                }
-                else if (spriteNum == 4) {
-                    spriteNum = 1;
-                }
+                if (spriteNum == 1) spriteNum = 2;
+                else if (spriteNum == 2) spriteNum = 3;
+                else if (spriteNum == 3) spriteNum = 4;
+                else if (spriteNum == 4) spriteNum = 1;
                 spriteCounter = 0;
+            }
         }
+        else if (keyHandler.spacePressed && bulletCounter == 0) {
+            gp.controller.addBullet(new Bullet(worldX, worldY, direction, gp));
+            bulletCounter++;
         }
         else{
             if (Objects.equals(direction, "up")) spriteNum = 1;
@@ -135,6 +150,7 @@ public class Player extends Entity{
             if (Objects.equals(direction, "right")) spriteNum = 1;
         }
 
+        if (!keyHandler.spacePressed) bulletCounter = 0;
     }
 
     public void pickUpObject(int i) {
@@ -150,60 +166,28 @@ public class Player extends Entity{
 
         switch (direction) {
             case "up":
-                if (spriteNum == 1) {
-                    image = up1;
-                }
-                if (spriteNum == 2) {
-                    image = up2;
-                }
-                if (spriteNum == 3) {
-                    image = up3;
-                }
-                if (spriteNum == 4) {
-                    image = up4;
-                }
+                if (spriteNum == 1) image = up1;
+                if (spriteNum == 2) image = up2;
+                if (spriteNum == 3) image = up3;
+                if (spriteNum == 4) image = up4;
                 break;
             case "down" :
-                if (spriteNum == 1) {
-                    image = down1;
-                }
-                if (spriteNum == 2) {
-                    image = down2;
-                }
-                if (spriteNum == 3) {
-                    image = down3;
-                }
-                if (spriteNum == 4) {
-                    image = down4;
-                }
+                if (spriteNum == 1) image = down1;
+                if (spriteNum == 2) image = down2;
+                if (spriteNum == 3) image = down3;
+                if (spriteNum == 4) image = down4;
                 break;
             case "left":
-                if (spriteNum == 1) {
-                    image = left1;
-                }
-                if (spriteNum == 2) {
-                    image = left2;
-                }
-                if (spriteNum == 3) {
-                    image = left3;
-                }
-                if (spriteNum == 4) {
-                    image = left4;
-                }
+                if (spriteNum == 1) image = left1;
+                if (spriteNum == 2) image = left2;
+                if (spriteNum == 3) image = left3;
+                if (spriteNum == 4) image = left4;
                 break;
             case "right" :
-                if (spriteNum == 1) {
-                    image = right1;
-                }
-                if (spriteNum == 2) {
-                    image = right2;
-                }
-                if (spriteNum == 3) {
-                    image = right3;
-                }
-                if (spriteNum == 4) {
-                    image = right4;
-                }
+                if (spriteNum == 1) image = right1;
+                if (spriteNum == 2) image = right2;
+                if (spriteNum == 3) image = right3;
+                if (spriteNum == 4) image = right4;
                 break;
         }
         int x = screenX;
