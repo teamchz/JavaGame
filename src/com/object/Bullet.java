@@ -62,6 +62,7 @@ public class Bullet extends SuperObject {
                     gp.obj[i] = null;
                     gp.controller.removeBullet(this);
                     gp.player.point += 100;
+                    gp.aSetter.setOneObject();
                 }
             }
         }
