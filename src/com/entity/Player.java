@@ -3,7 +3,6 @@ package com.entity;
 import com.company.GamePanel;
 import com.company.KeyHandler;
 import com.object.Bullet;
-import com.object.Controller;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,8 +17,10 @@ public class Player extends Entity{
     public final int screenX;
     public final int screenY;
     public int point = 0;
+    public int playerHealth = 100;
     boolean moving = false;
     int pixelCounter = 0;
+    public int energyBuffer;
 
 
     public Player(GamePanel gp, KeyHandler keyHandler) {
@@ -75,7 +76,7 @@ public class Player extends Entity{
     }
 
     public void update() {
-        if (moving == false) {
+        if (!moving) {
             if (keyHandler.upPressed || keyHandler.downPressed ||
                     keyHandler.leftPressed || keyHandler.rightPressed) {
                 if (keyHandler.upPressed) {
@@ -112,6 +113,12 @@ public class Player extends Entity{
                 // CHECK OBJECT COLLISION
                 int objIndexBomb = gp.cChecker.checkObject(this, true);
                 pickUpObject(objIndexBomb);
+
+                // CHECK IF PLAYER HEALTH IS 0
+                if (gp.player.playerHealth <= 0) {
+                    gp.ui.showMessage("You Lose");
+                    gp.gameThread = null;
+                }
             }
         }
 

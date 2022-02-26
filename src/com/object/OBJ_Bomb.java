@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class OBJ_Bomb extends SuperObject {
     public OBJ_Bomb() {
-        name = "key";
+        name = "bomb";
         try {
             image = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/objects/bomb.png")));
         }

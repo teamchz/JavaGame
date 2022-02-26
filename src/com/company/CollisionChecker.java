@@ -1,7 +1,9 @@
 package com.company;
 
 import com.entity.Entity;
-import com.object.Bullet;
+import com.object.OBJ_ET;
+
+import java.util.Objects;
 
 public class CollisionChecker {
     GamePanel gp;
@@ -54,8 +56,6 @@ public class CollisionChecker {
                 tileNum2 = gp.tileM.mapTileNum[entityRightCol][entityBottomRow];
                 if (gp.tileM.tile[tileNum1].collision || gp.tileM.tile[tileNum2].collision) {
                     entity.collisionOn = true;
-                    gp.ui.showMessage("You Lose");
-                    gp.gameThread = null;
                 }
                 break;
         }
@@ -63,7 +63,6 @@ public class CollisionChecker {
 
     public int checkObject(Entity entity, boolean player) {
         int index = 99999;
-
         for (int i = 0; i < gp.obj.length; i++) {
             if (gp.obj[i] != null) {
 
@@ -79,37 +78,29 @@ public class CollisionChecker {
                     case "up":
                         entity.solidArea.y -= entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            if (gp.obj[i].collision) entity.collisionOn = true;
-                            if (player == true) index = i;
-                            gp.ui.showMessage("You Lose");
-                            gp.gameThread = null;
+                            if (player) index = i;
+                            objChecker(i);
                         }
                         break;
                     case "down":
                         entity.solidArea.y += entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            if (gp.obj[i].collision) entity.collisionOn = true;
-                            if (player == true) index = i;
-                            gp.ui.showMessage("You Lose");
-                            gp.gameThread = null;
+                            if (player) index = i;
+                            objChecker(i);
                         }
                         break;
                     case "left":
                         entity.solidArea.x -= entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            if (gp.obj[i].collision) entity.collisionOn = true;
-                            if (player == true) index = i;
-                            gp.ui.showMessage("You Lose");
-                            gp.gameThread = null;
+                            if (player) index = i;
+                            objChecker(i);
                         }
                         break;
                     case "right":
                         entity.solidArea.x += entity.speed;
                         if (entity.solidArea.intersects(gp.obj[i].solidArea)) {
-                            if (gp.obj[i].collision) entity.collisionOn = true;
-                            if (player == true) index = i;
-                            gp.ui.showMessage("You Lose");
-                            gp.gameThread = null;
+                            if (player) index = i;
+                            objChecker(i);
                         }
                         break;
                 }
@@ -119,8 +110,22 @@ public class CollisionChecker {
                 gp.obj[i].solidArea.y = gp.obj[i].solidAreaDefaultY;
             }
         }
-
         return index;
+    }
+
+    public void objChecker(int index) {
+        if (Objects.equals(gp.obj[index].name, "ET")) {
+            gp.player.playerHealth += 5;
+            System.out.println("Energy before : " + gp.obj[index].energy);
+            gp.obj[index].energy -= 5;
+            System.out.println("Energy after : " + gp.obj[index].energy);
+            gp.player.energyBuffer = gp.obj[index].energy;
+            gp.aSetter.setNewET();
+        }
+        else if (Objects.equals(gp.obj[index].name, "bomb")) {
+            gp.player.playerHealth -= 5;
+            gp.aSetter.setNewBomb();
+        }
     }
 }
 

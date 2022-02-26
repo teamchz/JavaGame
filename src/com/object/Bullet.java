@@ -59,14 +59,18 @@ public class Bullet extends SuperObject {
                 gp.obj[i].solidArea.x = gp.obj[i].worldX;
                 gp.obj[i].solidArea.y = gp.obj[i].worldY;
                 if (solidArea.intersects(gp.obj[i].solidArea)) {
-                    gp.obj[i] = null;
-                    gp.controller.removeBullet(this);
-                    gp.player.point += 100;
-                    gp.aSetter.setOneObject();
+                    if (gp.obj[i].name == "bomb") {
+                        gp.obj[i] = null;
+                        gp.controller.removeBullet(this);
+                        gp.player.point += 100;
+                        gp.aSetter.setNewBomb();
+                    }
+                    else if (gp.obj[i].name == "ET") {
+                        gp.controller.removeBullet(this);
+                    }
                 }
             }
         }
-
     }
 
     public int getX() {
@@ -80,6 +84,23 @@ public class Bullet extends SuperObject {
     public void draw(Graphics2D g2) {
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
-        g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+        int x = screenX;
+        int y = screenY;
+
+        if (screenX > worldX) {
+            x = worldX;
+        }
+        if (screenY > worldY) {
+            y = worldY;
+        }
+        int rightOffset = gp.screenWidth - screenX;
+        if (rightOffset > gp.worldWidth - worldX) {
+            x = gp.screenWidth - (gp.worldWidth - worldX);
+        }
+        int bottomOffset = gp.screenHeight - screenY;
+        if (bottomOffset > gp.worldHeight - worldY) {
+            y = gp.screenHeight - (gp.worldHeight - worldY);
+        }
+        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
     }
 }

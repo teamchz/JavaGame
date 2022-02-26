@@ -6,7 +6,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.*;
 import java.util.Objects;
-import java.util.Random;
 
 public class TileManager {
     GamePanel gp;

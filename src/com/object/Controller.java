@@ -6,7 +6,7 @@ import java.awt.*;
 import java.util.LinkedList;
 
 public class Controller {
-    private LinkedList<Bullet> b = new LinkedList<Bullet>();
+    private LinkedList<Bullet> b = new LinkedList<>();
     Bullet TempBullet;
     GamePanel gp;
 
@@ -17,8 +17,8 @@ public class Controller {
     public void update() {
         for (int i = 0; i < b.size(); i++) {
             TempBullet = b.get(i);
-            if (TempBullet.getY() < 0 || TempBullet.getY() > 3840
-            || TempBullet.getX() < 0 || TempBullet.getX() > 4800) {
+            if (TempBullet.getY() < 0 || TempBullet.getY() > gp.worldHeight
+            || TempBullet.getX() < 0 || TempBullet.getX() > gp.worldWidth) {
                 removeBullet(TempBullet);
             }
             TempBullet.update();

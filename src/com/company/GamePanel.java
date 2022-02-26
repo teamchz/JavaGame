@@ -31,7 +31,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     TileManager tileM = new TileManager(this);
     KeyHandler keyHandler = new KeyHandler();
-    Thread gameThread;
+    public Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public Player player = new Player(this, keyHandler);
@@ -39,6 +39,7 @@ public class GamePanel extends JPanel implements Runnable {
     public Bullet bullet = new Bullet(player.worldX, player.worldY, player.direction,this);
     public Controller controller = new Controller(this);
     public UI ui = new UI(this);
+    String username = JOptionPane.showInputDialog(this, "Enter your Name", "Player 1");
 
 
     public GamePanel() {
