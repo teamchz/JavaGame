@@ -110,7 +110,7 @@ public class GamePanelMP extends JPanel implements Runnable {
         }
     }
 
-    public void update() {
+    public synchronized void update() {
         player.update();
         controller.update();
     }
