@@ -1,4 +1,4 @@
-    # JavaGame Multiplayer
+# JavaGame Multiplayer
 
 ### Member
 > 63090500426 นิติพัฒน์ ศรีธระชิยานนท์
